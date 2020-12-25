@@ -5,9 +5,7 @@ import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
-import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -17,10 +15,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 
-
 @Configuration
 @EnableSwagger2WebMvc
-@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfiguration {
     private final OpenApiExtensionResolver openApiExtensionResolver;
 
@@ -36,7 +32,8 @@ public class SwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.nucarf.controller"))
                 .paths(PathSelectors.any())
-                .build().extensions(openApiExtensionResolver.buildSettingExtensions());
+                .build()
+                .extensions(openApiExtensionResolver.buildSettingExtensions());
     }
 
     private ApiInfo groupApiInfo(){
@@ -44,7 +41,7 @@ public class SwaggerConfiguration {
                 .title("swagger-bootstrap-ui很棒~~~！！！")
                 .description("<div style='font-size:14px;color:red;'>swagger-bootstrap-ui-demo RESTful APIs</div>")
                 .termsOfServiceUrl("http://www.group.com/")
-                .contact("group@qq.com")
+                .contact(new Contact("user","localhost","nucarf@qq.com"))
                 .version("1.0")
                 .build();
     }
